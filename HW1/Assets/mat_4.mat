@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_1
-  m_Shader: {fileID: 4800000, guid: 1e85b1419d16556418a40a08e8943101, type: 3}
+  m_Name: mat_4
+  m_Shader: {fileID: 4800000, guid: b9c47e97fb9cea94aa4b4351edb15abb, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -75,16 +75,23 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _HiClass: 1
+    - _LookUpDistance: 1
     - _Metallic: 0
+    - _Mix: 2
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Shininess: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _Speed: 1
     - _SrcBlend: 1
+    - _Steps: 6
     - _UVSec: 0
     - _ZWrite: 1
+    - _mX: 0
+    - _mY: 0
     m_Colors:
     - _AmbientColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 0}

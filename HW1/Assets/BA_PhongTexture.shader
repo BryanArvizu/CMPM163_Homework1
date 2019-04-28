@@ -13,7 +13,7 @@
 	{
 		pass
 		{
-		Tags {"LightMode" = "ForwardAdd"}
+		Tags {"LightMode" = "ForwardBase"}
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
