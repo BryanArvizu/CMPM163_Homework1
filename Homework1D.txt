@@ -1,0 +1,32 @@
+D. Discuss a visual effect (10 pts)
+Take a screenshot (or photo) of an interesting visual effect you noticed in a video game or
+computational artwork. In a few paragraphs, describe the effect. What do you like about it?
+Does the effect change depending on the camera view? The lights? Is it an effect that
+updates the geometry itself, or change the color of the pixels, or does it alter a texture?
+How do you think it was created? What is the effect called? Do some research/Googling
+and see if you can find papers, online tutorials, or blog posts that give insight into how it
+was created and how you might emulate it in a Unity shader.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Screenshot: https://imgur.com/a/kTk6l8P
+
+A visual effect I always adored was the night vision mode in 'Halo 3: ODST'. The game involves
+wandering an evacuated city at night, trying to find clues as to what happened to the rest of
+your squad. Because of the dark and poorly lit environment, the developers of the game included
+a very unique night vision mode, which slightly brightens the environment and highlights certain 
+edges of objects with an accent color. The effect does not highlight all edges equally, however;
+edges that outline the player are colored much brighter than edges that do not. Thus, the effect
+is dependent on the camera view.
+
+The shader does not appear to alter verticies at all, and only alters the colors of the pixels.
+As far as I can tell, it looks like the effect is probably applied on every object? Perhaps it
+is rendered onto a screen texture that is only overlayed when the player enables their night
+vison? As far as recreating this effect, it looks like it can be made by simply brightening the
+textures pixels a bit, adding in an edge detection shader, and then topping it off with an 
+outline effect.
+
+There surprisingly isn't many articles or posts on how to recreate this exact effect, but given
+the components I identified above, it shouldn't be hard to research and make. I was quickly able
+to find many tutorials on edge detection and outline shaders, which make up the core of the
+effect.

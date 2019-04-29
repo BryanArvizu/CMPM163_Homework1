@@ -87,9 +87,9 @@
                     if (alive >= 3 && alive <= 6)
 					{
 						float x = C.r;
-						x += 0.01;
-						if (x > 0.5)
-							x = 0.5;
+						x += 0.025;
+						if (x > .75)
+							x = 0.75;
 						return float4(x,0,1,1.0);
                     }
 

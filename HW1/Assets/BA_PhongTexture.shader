@@ -2,6 +2,7 @@
 {
 	Properties
 	{
+		_Speed("Speed", Float) = 1.0
 		_Color("Color", Color) = (1,1,1,1)
 		_SpecularColor("Specular Color", Color) = (1, 1, 1, 1)
 		_AmbientColor("Ambient Color", Color) = (0.1, 0.1, 0.1, 1)
@@ -19,38 +20,60 @@
 			#pragma fragment frag
 
 			#include "UnityCG.cginc"
-
-			float4 _LightColor0;
-			float4 _Color;
-			float4 _SpecularColor;
-			float4 _AmbientColor;
-			float _Shininess;
-			sampler2D _Texture;
 			
 			struct appdata
 			{
-				float4 position: POSITION;
+				float4 vertex: POSITION;
 				float3 normal: NORMAL;
 				float2 uv: TEXCOORD0;
 			};
 
 			struct v2f
 			{
-				float4 position: SV_POSITION;
+				float4 vertex: SV_POSITION;
 				float3 normal: NORMAL;
 				float3 vertInObjCoords: TEXCOORD1;
 				float3 vertInWorldCoords: TEXCOORD2;
 				float2 uv: TEXCOORD0;
 			};
 
+			float3x3 getRotationMatrixY(float theta) {
+
+				float s = -sin(theta);
+				float c = cos(theta);
+				return float3x3(c, 0, s, 0, 1, 0, -s, 0, c);
+			}
+
+			float _Speed;
+			float4 _LightColor0;
+			float4 _Color;
+			float4 _SpecularColor;
+			float4 _AmbientColor;
+			float _Shininess;
+			sampler2D _Texture;
+			float4 _Texture_ST;
+
 			v2f vert(appdata v)
 			{
+				const float PI = 3.14159;
+
 				v2f o;
-				o.vertInObjCoords = v.position.xyz;
-				o.vertInWorldCoords = mul(unity_ObjectToWorld, v.position);
-				o.position = UnityObjectToClipPos(v.position);
-				o.normal = UnityObjectToWorldNormal(v.normal);
-				o.uv = v.uv;
+
+				float rad = fmod(_Time.y * _Speed, PI*2.0); // Time%(360deg in Rad)
+				float3x3 rotationMatrix = getRotationMatrixY(rad); // Rotate based on Rad
+
+				float3 rotatedVertex = mul(rotationMatrix, v.vertex.xyz);
+				float3 rotatedNormals = mul(rotationMatrix, v.normal.xyz);
+
+				float4 xyzVert = float4(rotatedVertex, 1.0);
+				float4 xyzNorm = float4(rotatedNormals, 1.0);
+
+
+				o.vertInObjCoords = xyzVert;
+				o.vertInWorldCoords = mul(unity_ObjectToWorld, xyzVert);
+				o.vertex = UnityObjectToClipPos(xyzVert);
+				o.normal = UnityObjectToWorldNormal(xyzNorm);
+				o.uv = TRANSFORM_TEX(v.uv, _Texture);
 				return o;
 			}
 
@@ -93,37 +116,59 @@
 
 			#include "UnityCG.cginc"
 
-			float4 _LightColor0;
-			float4 _Color;
-			float4 _SpecularColor;
-			float4 _AmbientColor;
-			float _Shininess;
-			sampler2D _Texture;
-
 			struct appdata
 			{
-				float4 position: POSITION;
+				float4 vertex: POSITION;
 				float3 normal: NORMAL;
 				float2 uv: TEXCOORD0;
 			};
 
 			struct v2f
 			{
-				float4 position: SV_POSITION;
+				float4 vertex: SV_POSITION;
 				float3 normal: NORMAL;
 				float3 vertInObjCoords: TEXCOORD1;
 				float3 vertInWorldCoords: TEXCOORD2;
 				float2 uv: TEXCOORD0;
 			};
 
+			float3x3 getRotationMatrixY(float theta) {
+
+				float s = -sin(theta);
+				float c = cos(theta);
+				return float3x3(c, 0, s, 0, 1, 0, -s, 0, c);
+			}
+
+			float _Speed;
+			float4 _LightColor0;
+			float4 _Color;
+			float4 _SpecularColor;
+			float4 _AmbientColor;
+			float _Shininess;
+			sampler2D _Texture;
+			float4 _Texture_ST;
+
 			v2f vert(appdata v)
 			{
+				const float PI = 3.14159;
+
 				v2f o;
-				o.vertInObjCoords = v.position.xyz;
-				o.vertInWorldCoords = mul(unity_ObjectToWorld, v.position);
-				o.position = UnityObjectToClipPos(v.position);
-				o.normal = UnityObjectToWorldNormal(v.normal);
-				o.uv = v.uv;
+
+				float rad = fmod(_Time.y * _Speed, PI*2.0); // Time%(360deg in Rad)
+				float3x3 rotationMatrix = getRotationMatrixY(rad); // Rotate based on Rad
+
+				float3 rotatedVertex = mul(rotationMatrix, v.vertex.xyz);
+				float3 rotatedNormals = mul(rotationMatrix, v.normal.xyz);
+
+				float4 xyzVert = float4(rotatedVertex, 1.0);
+				float4 xyzNorm = float4(rotatedNormals, 1.0);
+
+
+				o.vertInObjCoords = xyzVert;
+				o.vertInWorldCoords = mul(unity_ObjectToWorld, xyzVert);
+				o.vertex = UnityObjectToClipPos(xyzVert);
+				o.normal = UnityObjectToWorldNormal(xyzNorm);
+				o.uv = TRANSFORM_TEX(v.uv, _Texture);
 				return o;
 			}
 
@@ -145,8 +190,6 @@
 
 			ENDCG
 		}
-
-
 	}
 	FallBack "Diffuse"
 }

@@ -1,6 +1,6 @@
 ﻿//Adapted for Unity from GLSL code at http://www.ozone3d.net/tutorials/mesh_deformer_p3.php
 
-Shader "Custom/Twist"
+Shader "Custom/BA_VertDisplace"
 {
     Properties
     {
@@ -33,14 +33,14 @@ Shader "Custom/Twist"
                 float3 normal : NORMAL;
                 
             };
+            
+            
          
             v2f vert (appdata v)
             {
                 v2f o;
                 
-                const float PI = 3.14159;
-                
-                float rad = sin(_Time.y * _Speed);
+                float t = sin(_Time.y * _Speed);
                 
                 float useTwist = 10.0;
                 
@@ -55,8 +55,8 @@ Shader "Custom/Twist"
                 float ct = cos(v.vertex.y/useTwist);
                 float st = sin(v.vertex.y/useTwist);
                
-                float newx = v.vertex.x + (v.vertex.x * ct * rad - v.vertex.z * st * rad ); 
-                float newz = v.vertex.z + (v.vertex.x * st * rad + v.vertex.z * ct * rad ); 
+                float newx = v.vertex.x + (v.vertex.x * ct * t - v.vertex.z * st * t);
+                float newz = v.vertex.z + (v.vertex.x * st * t + v.vertex.z * ct * t);
                 float newy = v.vertex.y ;
                 
                 float4 xyz = float4(newx, newy, newz, 1.0);

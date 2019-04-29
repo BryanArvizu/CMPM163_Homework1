@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PingPong_CellularAutomata : MonoBehaviour
+public class PingPong : MonoBehaviour
 {
     [SerializeField] private float tickrate = 0.05f;
 
@@ -43,15 +43,17 @@ public class PingPong_CellularAutomata : MonoBehaviour
                         texA.SetPixel(i, j, new Color(0, 0, 1f, 1f));
                     else
                         texA.SetPixel(i, j, new Color(0, 0, 0, 0));
-                } else {
-                    texA.SetPixel(i, j, new Color(0,0,0,0));
+                }
+                else
+                {
+                    texA.SetPixel(i, j, new Color(0, 0, 0, 0));
                 }
 
         texA.Apply(); //copy changes to the GPU
 
 
         rt1 = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
-   
+
 
         rend = GetComponent<Renderer>();
 
@@ -60,13 +62,13 @@ public class PingPong_CellularAutomata : MonoBehaviour
 
     }
 
-   
+
     void Update()
     {
         //set active shader to be a shader that computes the next timestep
         //of the Cellular Automata system
         rend.material.shader = cellularAutomataShader;
-      
+
         if (count % 2 == 0)
         {
             inputTex = texA;
@@ -90,8 +92,8 @@ public class PingPong_CellularAutomata : MonoBehaviour
         //output texture onto a game object
         rend.material.shader = ouputTextureShader;
         rend.material.SetTexture("_MainTex", outputTex);
-       
-        if(timer > tickrate)
+
+        if (timer > tickrate)
         {
             count++;
             timer = 0f;
